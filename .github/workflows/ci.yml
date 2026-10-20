@@ -26,6 +26,8 @@ jobs:
           test -s public/tesseract/core/tesseract-core-simd.wasm.js
           test -s public/tesseract/core/tesseract-core-lstm.wasm.js
           test -s public/tesseract/core/tesseract-core-simd-lstm.wasm.js
+          test -s public/tesseract/core/tesseract-core-relaxedsimd.wasm.js
+          test -s public/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js
           test -s public/tesseract/lang/ita.traineddata.gz
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
