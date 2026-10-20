@@ -68,13 +68,7 @@ export async function analyzeWithMotore(
         deskewApplied:ocr.geometryCorrection?.deskewApplied??false,
         canonical:'source'
       },
-      structure,
-      pipeline:{
-        normalizedImage:session.normalizedImage,
-        rawOcr:session.raw,
-        evidence:session.evidence,
-        stabilized:session.stabilized
-      }
+      structure
     };
     pages.push(page);
     diagnostics.push(...ocr.warnings.map(w=>`P${ocr.pageNumber}:${w}`));
