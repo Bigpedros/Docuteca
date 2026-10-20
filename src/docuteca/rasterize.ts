@@ -67,6 +67,7 @@ async function rasterizePdf(file:File,startPageNumber:number):Promise<RasterPage
     }
     return output;
   }finally{
-    await pdf.destroy();
+    await pdf.cleanup();
+    await loadingTask.destroy();
   }
 }
