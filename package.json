@@ -9,7 +9,9 @@
     "typecheck": "tsc -b --pretty false",
     "test": "vitest run",
     "sync:recognizer-b": "node scripts/sync-recognizer-b.mjs",
-    "sync:tesseract": "node scripts/sync-tesseract-assets.mjs"
+    "sync:tesseract": "node scripts/sync-tesseract-assets.mjs",
+    "preview": "vite preview",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "react": "latest",
@@ -25,6 +27,7 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "vitest": "latest",
-    "jsdom": "latest"
+    "jsdom": "latest",
+    "@playwright/test": "^1.55.0"
   }
 }
