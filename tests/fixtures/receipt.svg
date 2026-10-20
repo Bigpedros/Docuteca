@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1400">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="900">
   <rect width="100%" height="100%" fill="white"/>
   <g fill="black" font-family="Arial, sans-serif">
-    <text x="90" y="120" font-size="48">DOCUMENTO COMMERCIALE</text>
-    <text x="90" y="220" font-size="42">NEGOZIO TEST</text>
-    <text x="90" y="360" font-size="42">ARTICOLO A 10,00</text>
-    <text x="90" y="440" font-size="42">ARTICOLO B 11,50</text>
-    <text x="90" y="620" font-size="52">TOTALE 21,50</text>
-    <text x="90" y="720" font-size="42">IVA 1,95</text>
-    <text x="90" y="820" font-size="42">PAGAMENTO BANCOMAT</text>
+    <text x="55" y="90" font-size="32">DOCUMENTO COMMERCIALE</text>
+    <text x="55" y="170" font-size="28">NEGOZIO TEST</text>
+    <text x="55" y="280" font-size="28">ARTICOLO A 10,00</text>
+    <text x="55" y="350" font-size="28">ARTICOLO B 11,50</text>
+    <text x="55" y="470" font-size="36">TOTALE 21,50</text>
+    <text x="55" y="540" font-size="28">IVA 1,95</text>
+    <text x="55" y="620" font-size="28">PAGAMENTO BANCOMAT</text>
   </g>
 </svg>
