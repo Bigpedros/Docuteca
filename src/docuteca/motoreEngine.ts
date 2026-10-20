@@ -10,7 +10,7 @@ import type {DocutecaMode} from '../types';
 import type {RasterPage} from './rasterize';
 
 export const MOTORE_ENGINE_VERSION='0.5.0-rc.1';
-export const MOTORE_SOURCE_COMMIT='fb0d27cbbb288b5b7c7cc63b8cdee6a7d428fd9e';
+export const MOTORE_SOURCE_COMMIT='53be3cf89b6eee5f4e1e1bfcc42ff30689cd822c';
 
 export interface MotoreAnalysis{
   mode:DocutecaMode;
@@ -28,7 +28,11 @@ const primaryProvider=new TesseractLocalProvider({
   language:'ita',
   segmentation:'auto',
   dpi:300,
-  performanceProfile:'med'
+  performanceProfile:'med',
+  workerPath:'/tesseract/worker.min.js',
+  corePath:'/tesseract/core',
+  langPath:'/tesseract/lang',
+  workerBlobURL:false
 });
 const secondaryProvider=new OcrsWasmRecognizerB({
   moduleUrl:'/recognizer-b/ocrs_wasm.js',
