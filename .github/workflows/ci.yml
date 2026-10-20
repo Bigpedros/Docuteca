@@ -29,3 +29,8 @@ jobs:
           test -s public/tesseract/lang/ita.traineddata.gz
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        with:
+          name: docuteca-netlify-dist
+          path: dist
+          if-no-files-found: error
