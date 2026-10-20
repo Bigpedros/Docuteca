@@ -25,6 +25,10 @@ export interface TesseractLocalOptions {
   dpi?:number;
   maxVariantDimension?:number;
   performanceProfile?:'min'|'med'|'max';
+  workerPath?:string;
+  corePath?:string;
+  langPath?:string;
+  workerBlobURL?:boolean;
 }
 
 export class TesseractLocalProvider implements OcrProvider {
@@ -439,7 +443,7 @@ export class TesseractLocalProvider implements OcrProvider {
 
   async dispose():Promise<void>{const worker=this.worker;this.worker=undefined;if(worker)await worker.terminate();}
   private normalPsm(){return this.options.segmentation==='block'?PSM.SINGLE_BLOCK:this.options.segmentation==='sparse'?PSM.SPARSE_TEXT:PSM.AUTO;}
-  private async getWorker():Promise<Worker>{if(this.worker)return this.worker;this.worker=await createWorker(this.options.language??'ita',OEM.LSTM_ONLY);await this.worker.setParameters({tessedit_pageseg_mode:this.normalPsm(),preserve_interword_spaces:'1',user_defined_dpi:String(this.options.dpi??300)});return this.worker;}
+  private async getWorker():Promise<Worker>{if(this.worker)return this.worker;this.worker=await createWorker(this.options.language??'ita',OEM.LSTM_ONLY,{workerPath:this.options.workerPath,corePath:this.options.corePath,langPath:this.options.langPath,workerBlobURL:this.options.workerBlobURL});await this.worker.setParameters({tessedit_pageseg_mode:this.normalPsm(),preserve_interword_spaces:'1',user_defined_dpi:String(this.options.dpi??300)});return this.worker;}
 }
 
 function chooseSegmentation(width:number,height:number,fallback:PSM):PSM{const ratio=width/Math.max(1,height);return ratio<.72&&height>width*1.35?PSM.SINGLE_COLUMN:fallback;}
