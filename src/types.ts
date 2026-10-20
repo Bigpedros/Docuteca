@@ -5,4 +5,5 @@ export interface ClassificationResult{ type:string; confidence:number; reason:st
 export interface DocutecaDocument{
   id:string; title:string; createdAt:string; files:IntakeFile[]; mode:DocutecaMode;
   classification:ClassificationResult; extractedText:string; tags:string[]; status:'archived'|'review';
+  pageCount:number; diagnostics:string[]; engineVersion:string;
 }
