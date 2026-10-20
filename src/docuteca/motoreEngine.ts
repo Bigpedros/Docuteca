@@ -1,6 +1,7 @@
 import type {EngineDocumentResult,EnginePageResult,StructuralClass} from '../vendor/motore-ocr-ai/contracts.js';
 import {DocutecaAdapter} from '../vendor/motore-ocr-ai/adapters/docuteca.js';
 import {TesseractLocalProvider} from '../vendor/motore-ocr-ai/core/ocr/tesseractLocalProvider.js';
+import {DualRecognizerOcrProvider,OcrsWasmRecognizerB} from '../vendor/motore-ocr-ai/core/ocr/recognizerB.js';
 import {OcrPageOrchestrator} from '../vendor/motore-ocr-ai/core/ocr/orchestrator.js';
 import {detectStructuralRegions} from '../vendor/motore-ocr-ai/core/structure/regionDetector.js';
 import {analyzeStructure} from '../vendor/motore-ocr-ai/core/structure/analyzer.js';
@@ -23,12 +24,18 @@ export interface MotoreAnalysis{
   sourceCommit:string;
 }
 
-const provider=new TesseractLocalProvider({
+const primaryProvider=new TesseractLocalProvider({
   language:'ita',
   segmentation:'auto',
   dpi:300,
   performanceProfile:'med'
 });
+const secondaryProvider=new OcrsWasmRecognizerB({
+  moduleUrl:'/recognizer-b/ocrs_wasm.js',
+  detectionModelUrl:'/models/text-detection.rten',
+  recognitionModelUrl:'/models/text-recognition.rten'
+});
+const provider=new DualRecognizerOcrProvider(primaryProvider,secondaryProvider);
 const orchestrator=new OcrPageOrchestrator(provider);
 const adapter=new DocutecaAdapter();
 
@@ -75,7 +82,8 @@ export async function analyzeWithMotore(
     diagnostics.push(
       `P${ocr.pageNumber}:ORCHESTRATOR_INITIAL_MS:${Math.round(session.diagnostics.initialMs)}`,
       `P${ocr.pageNumber}:ORCHESTRATOR_STABILIZATION_MS:${Math.round(session.diagnostics.stabilizationMs)}`,
-      `P${ocr.pageNumber}:REGIONS:${regions.length}`
+      `P${ocr.pageNumber}:REGIONS:${regions.length}`,
+      `P${ocr.pageNumber}:DUAL_PROVIDER:${provider.id}`
     );
   }
 
