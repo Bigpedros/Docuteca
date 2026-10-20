@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run sync:recognizer-b && tsc -b && vite build",
     "typecheck": "tsc -b --pretty false",
-    "test": "vitest run"
+    "test": "vitest run",
+    "sync:recognizer-b": "node scripts/sync-recognizer-b.mjs"
   },
   "dependencies": {
     "react": "latest",
