@@ -1,16 +1,22 @@
-import {copyFile,mkdir,readFile,writeFile} from 'node:fs/promises';
+import {copyFile,mkdir,readFile,readdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 
-const copies=[
-  ['node_modules/tesseract.js/dist/worker.min.js','public/tesseract/worker.min.js'],
-  ['node_modules/tesseract.js-core/tesseract-core.wasm.js','public/tesseract/core/tesseract-core.wasm.js'],
-  ['node_modules/tesseract.js-core/tesseract-core-simd.wasm.js','public/tesseract/core/tesseract-core-simd.wasm.js'],
-  ['node_modules/tesseract.js-core/tesseract-core-lstm.wasm.js','public/tesseract/core/tesseract-core-lstm.wasm.js'],
-  ['node_modules/tesseract.js-core/tesseract-core-simd-lstm.wasm.js','public/tesseract/core/tesseract-core-simd-lstm.wasm.js']
-];
+await mkdir('public/tesseract',{recursive:true});
+await mkdir('public/tesseract/core',{recursive:true});
 
-for(const [src,dst] of copies){
-  await mkdir(dst.slice(0,dst.lastIndexOf('/')),{recursive:true});
+await copyFile('node_modules/tesseract.js/dist/worker.min.js','public/tesseract/worker.min.js');
+{
+  const bytes=await readFile('public/tesseract/worker.min.js');
+  console.log(`self-hosted public/tesseract/worker.min.js: ${bytes.length} bytes sha256=${createHash('sha256').update(bytes).digest('hex')}`);
+}
+
+const coreDir='node_modules/tesseract.js-core';
+const coreFiles=(await readdir(coreDir)).filter(name=>/^tesseract-core.*\.wasm\.js$/.test(name)).sort();
+if(coreFiles.length<4)throw new Error(`Unexpected tesseract.js-core layout: found only ${coreFiles.length} wasm.js variants`);
+
+for(const name of coreFiles){
+  const src=`${coreDir}/${name}`;
+  const dst=`public/tesseract/core/${name}`;
   await copyFile(src,dst);
   const bytes=await readFile(dst);
   console.log(`self-hosted ${dst}: ${bytes.length} bytes sha256=${createHash('sha256').update(bytes).digest('hex')}`);
