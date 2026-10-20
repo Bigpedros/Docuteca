@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run sync:recognizer-b && tsc -b && vite build",
+    "build": "npm run sync:recognizer-b && npm run sync:tesseract && tsc -b && vite build",
     "typecheck": "tsc -b --pretty false",
     "test": "vitest run",
-    "sync:recognizer-b": "node scripts/sync-recognizer-b.mjs"
+    "sync:recognizer-b": "node scripts/sync-recognizer-b.mjs",
+    "sync:tesseract": "node scripts/sync-tesseract-assets.mjs"
   },
   "dependencies": {
     "react": "latest",
